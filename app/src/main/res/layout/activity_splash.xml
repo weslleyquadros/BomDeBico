@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.weslleyq.bomdebico.SplashActivity"
+        android:orientation="vertical"
+        android:background="#ffda8e">
+
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+
+            android:gravity="bottom|center"
+
+            android:src="@drawable/logoapp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:layout_weight="1"
+            android:gravity="top|center"
+            android:text="BomDeBico APP"
+            android:textColor="#5c196b"
+            android:textSize="40sp"
+            />
+
+
+    </LinearLayout>
+
