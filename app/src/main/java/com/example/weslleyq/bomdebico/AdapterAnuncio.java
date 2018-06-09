@@ -1,6 +1,9 @@
 package com.example.weslleyq.bomdebico;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +31,31 @@ public class AdapterAnuncio extends RecyclerView.Adapter<AdapterAnuncio.ItemView
     }
 
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, int position) {
+    public void onBindViewHolder(ItemViewHolder holder, final int position) {
         holder.txtTitulo.setText(lista.get(position).getTitulo());
         holder.txtDescricao.setText(lista.get(position).getDescricao());
-        holder.foto.setImageResource(lista.get(position).getImagenId());
-        holder.classificacao.setRating(lista.get(position).getClassificacao());
+        // holder.foto.setImageResource(lista.get(position).getImagenId());
+        // holder.classificacao.setRating(lista.get(position).getClassificacao());
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Context contexto;
+                contexto = view.getContext();
+                Intent intent = new Intent(contexto, DetalheActivity.class);
+                String posicao = Integer.toString(position);
+                Log.d("posicao", posicao);
+                intent.putExtra("Titulo", lista.get(position).getTitulo());
+
+
+
+                contexto.startActivity(intent);
+
+
+            }
+        });
     }
 
     @Override

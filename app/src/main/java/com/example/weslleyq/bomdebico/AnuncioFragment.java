@@ -6,12 +6,20 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.Map;
 
 
 /**
@@ -66,29 +74,59 @@ public class AnuncioFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    private DatabaseReference mDatabase;
+    ItemAnuncios inserirAnuncios;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_anuncio, container, false);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         lista=new ArrayList<>();
         dataSource= (RecyclerView) view.findViewById(R.id.lista);
         dataSource.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        ListaAnuncios();
 
-        AdapterAnuncio adapter=new AdapterAnuncio(lista);
-        dataSource.setAdapter(adapter);
+
+        mDatabase.child("Anuncio").addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for(DataSnapshot objSnapShot: dataSnapshot.getChildren()){
+                            ItemAnuncios anuncio = objSnapShot.getValue(ItemAnuncios.class);
+                            //ListaAnuncios(anuncio);
+                            lista.add(anuncio);
+
+                            Log.i("TAG","");
+                        }
+
+                        AdapterAnuncio adapter=new AdapterAnuncio(lista);
+                        dataSource.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.i("LOG", String.valueOf(databaseError));
+//handle databaseError
+                    }
+
+
+
+                });
+
+        //ListaAnuncios(inserirAnuncios);
+
 
         return view;
     }
 
-    private void ListaAnuncios() {
-        lista.add(new ItemAnuncios("Encanador","Faço qualquer tipo de encanação.",3,R.drawable.encanador));
-        lista.add(new ItemAnuncios("Formatação","Formatação é comigo mesmo, sou Daniel Ferreira",4,R.drawable.formatacao));
-        lista.add(new ItemAnuncios("Moveis Planejados","Sou Matheus José,contato (63) 98415-6688, Facebook: https://www.facebook.com/oficinacriar/",4,R.drawable.oficinacriar));
-        lista.add(new ItemAnuncios("Pintura em geral","Faço pitura em geral, favor entrar em contato . (63) 98214-1937 (Claudio).",2,R.drawable.pintura));
+    private void ListaAnuncios(ItemAnuncios Anuncio) {
+        lista.add(new ItemAnuncios(Anuncio.getTitulo(),Anuncio.getDescricao(),Anuncio.getTelefone(), Anuncio.getDatacadastro()));
+        lista.add(new ItemAnuncios("Formatação","Formatação é comigo mesmo, sou Daniel Ferreira","999-99999","hoje"));
+       /* lista.add(new ItemAnuncios("Moveis Planejados","Sou Matheus José,contato (63) 98415-6688, Facebook: https://www.facebook.com/oficinacriar/",4,R.drawable.oficinacriar));
+        lista.add(new ItemAnuncios("Pintura em geral","Faço pitura em geral, favor entrar em contato . (63) 98214-1937 (Claudio).",2,R.drawable.pintura)); */
     }
 
 

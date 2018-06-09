@@ -18,14 +18,37 @@ public class ItemAnuncios {
 
     private String titulo;
     private String descricao;
-    private int imagenId;
-    private int classificacao;
+    public String telefone;
+    public String datacadastro;
 
-    public ItemAnuncios(String titulo, String descricao, int classificacao, int imagenId) {
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.imagenId = imagenId;
-        this.classificacao = classificacao;
+
+
+    public ItemAnuncios(String titulo, String descricao, String telefone, String datacadastro) {
+            this.titulo = titulo;
+            this.descricao = descricao;
+            this.telefone = telefone;
+            this.datacadastro = datacadastro;
+       // this.imagenId = imagenId;
+      //  this.classificacao = classificacao;
+    }
+    public ItemAnuncios(){
+
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getDatacadastro() {
+        return datacadastro;
+    }
+
+    public void setDatacadastro(String datacadastro) {
+        this.datacadastro = datacadastro;
     }
 
     public String getTitulo() {
@@ -44,19 +67,4 @@ public class ItemAnuncios {
         this.descricao = descricao;
     }
 
-    public int getImagenId() {
-        return imagenId;
-    }
-
-    public void setImagenId(int imagenId) {
-        this.imagenId = imagenId;
-    }
-
-    public int getClassificacao() {
-        return classificacao;
-    }
-
-    public void setClassificacao(int classificacao) {
-        this.classificacao = classificacao;
-    }
 }
