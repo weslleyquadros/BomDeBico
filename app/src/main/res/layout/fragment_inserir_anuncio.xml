@@ -10,9 +10,10 @@
     <EditText
         android:id="@+id/CampoTitulo"
         android:layout_width="350dp"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_below="@+id/imageView2"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="29dp"
         android:layout_marginEnd="17dp"
         android:layout_marginStart="17dp"
         android:layout_marginTop="14dp"
@@ -21,9 +22,11 @@
         android:inputType="textPersonName"
         android:textColorHint="@android:color/black"
         android:textColorLink="#1ec0ff"
+        app:layout_constraintBottom_toTopOf="@+id/CampoDescricao"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
 
     <EditText
         android:id="@+id/CampoDescricao"
@@ -53,51 +56,35 @@
         android:layout_marginEnd="148dp"
         android:layout_marginStart="148dp"
         android:layout_marginTop="29dp"
-        android:background="#1ec0ff"
+
+        android:background="@drawable/botaoarredondado"
         android:onClick="validaLogin"
         android:text="Inserir"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Campofone" />
+        app:layout_constraintTop_toBottomOf="@+id/Campofone"
+        app:layout_constraintVertical_bias="0.214" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageView4"
+        android:layout_width="171dp"
+        android:layout_height="108dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginEnd="59dp"
-        android:layout_marginStart="25dp"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintEnd_toStartOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="44dp"
-        tools:ignore="ContentDescription,MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/imageView4"
-        android:layout_marginEnd="46dp"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintEnd_toStartOf="@+id/imageView4"
-        tools:layout_editor_absoluteY="44dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="38dp"
+        android:layout_marginEnd="164dp"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="16dp"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="44dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintHorizontal_bias="0.414"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+
+
 
     <EditText
         android:id="@+id/Campofone"
@@ -116,8 +103,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CampoDescricao" />
 
-
-
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:layout_marginEnd="168dp"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/CampoTitulo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:srcCompat="@drawable/ic_menu_gallery" />
 
 
 </android.support.constraint.ConstraintLayout>

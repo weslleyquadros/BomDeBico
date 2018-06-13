@@ -1,5 +1,7 @@
 package com.example.weslleyq.bomdebico;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +10,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,7 +27,7 @@ public class HomePage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         AnuncioFragment.OnFragmentInteractionListener, InserirAnuncioFragment.OnFragmentInteractionListener,
         PerfilFragment.OnFragmentInteractionListener,
-        SobreFragment.OnFragmentInteractionListener {
+        SobreFragment.OnFragmentInteractionListener , SearchView.OnQueryTextListener{
 
 
 
@@ -33,6 +37,9 @@ public class HomePage extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -59,6 +66,30 @@ public class HomePage extends AppCompatActivity
 
         getSupportFragmentManager().beginTransaction().replace(R.id.conteudo, new AnuncioFragment()).commit();
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+      //  getMenuInflater().inflate(R.menu.menu_search, menu);
+        getMenuInflater().inflate(R.menu.home_page, menu);
+
+      //  MenuItem searchItem = menu.findItem(R.id.search);
+       // SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        //searchView.setOnQueryTextListener(this);
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        // User pressed the search button
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        // User changed the text
+        return false;
+    }
+
 
 
 
@@ -72,12 +103,12 @@ public class HomePage extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    //@Override
+    //public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_page, menu);
-        return true;
-    }
+      //  getMenuInflater().inflate(R.menu.home_page, menu);
+        //return true;
+   // }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -94,13 +125,16 @@ public class HomePage extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
 
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         Fragment fragment = null;
+        Context contexto = null;
+
         boolean fragmentSelecionado=false;
+        boolean activitySelecionado=false;
         Bundle bundle = new Bundle();
         if (id == R.id.nav_anuncios) {
             fragment = new AnuncioFragment();
@@ -112,6 +146,9 @@ public class HomePage extends AppCompatActivity
         } else if (id == R.id.nav_perfil) {
         fragment = new PerfilFragment();
             fragmentSelecionado=true;
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+
         }
         else if (id == R.id.nav_inserir) {
             fragment = new InserirAnuncioFragment();

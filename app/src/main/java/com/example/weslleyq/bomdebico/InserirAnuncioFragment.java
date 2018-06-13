@@ -1,9 +1,14 @@
 package com.example.weslleyq.bomdebico;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +16,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,7 +33,7 @@ import java.util.Date;
  * Use the {@link InserirAnuncioFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class InserirAnuncioFragment extends Fragment {
+public class InserirAnuncioFragment extends Fragment  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
@@ -41,6 +48,7 @@ public class InserirAnuncioFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private GoogleApiClient mGoogleApiClient;
     private DatabaseReference mDatabase;
 
     private OnFragmentInteractionListener mListener;
@@ -88,6 +96,9 @@ public class InserirAnuncioFragment extends Fragment {
         CampoTitulo = (EditText) viewFragment.findViewById(R.id.CampoTitulo);
         CampoDescricao = (EditText) viewFragment.findViewById(R.id.CampoDescricao);
         Campofone = (EditText) viewFragment.findViewById(R.id.Campofone);
+
+        //callConnection();
+
         Button btnCadastrar = (Button) viewFragment.findViewById(R.id.buttonCadastrar);
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
 
@@ -109,6 +120,11 @@ public class InserirAnuncioFragment extends Fragment {
         });
         return viewFragment;
     }
+    //METODO QUE UTILIZA O SYCRONIZED DO JAVA, PARA FAZER UMA CONEXÃO
+   /* private synchronized void callConnection() {
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity()).addOnConnectionFailedListener(this).addConnectionCallbacks(this).addApi(LocationServices.API).build();
+        mGoogleApiClient.connect();
+    } */
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -134,6 +150,55 @@ public class InserirAnuncioFragment extends Fragment {
         mListener = null;
     }
 
+  //  @Override
+    /*
+    public void onLocationChanged(Location location) {
+        Location local = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        */
+
+       /* txtLatitude = (TextView) getActivity().findViewById(R.id.textLatitude);
+        txtLongitude = (TextView) getActivity().findViewById(R.id.textLongitude);
+        txtCidade = (TextView) getActivity().findViewById(R.id.textCidade);
+        txtEstado = (TextView) getActivity().findViewById(R.id.textEstado);
+        txtPais = (TextView) getActivity().findViewById(R.id.textPais); */
+
+  /*
+        if (local != null){
+            Log.i("LOG", "latitude: " + local.getLatitude());
+            Log.i("LOG", "longitude: "+ local.getLongitude());
+            //txtLatitude.setText("Latitude: "+ local.getLatitude());
+            //txtLongitude.setText("Longitude: "+ local.getLongitude());
+
+            try {
+                endereco = buscarEnderecoGPS(local.getLatitude(), local.getLongitude());
+
+                txtCidade.setText("Cidade: "+ endereco.getLocality());
+                txtEstado.setText("Estado: "+endereco.getAdminArea());
+                txtPais.setText("País: "+endereco.getCountryName());
+
+            }catch (IOException e){
+                Log.i("GPS", e.getMessage());
+            }
+
+        }
+
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -144,6 +209,7 @@ public class InserirAnuncioFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
