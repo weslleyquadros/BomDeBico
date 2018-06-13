@@ -129,9 +129,10 @@ public class InserirAnuncioFragment extends Fragment  {
 
              SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy");
 
-
+      //estancia  um objeto de ItemAnuncios, que sera gravado no banco.
              ItemAnuncios inserir = new ItemAnuncios(CampoTitulo.getText().toString(), CampoDescricao.getText().toString(),
                      Campofone.getText().toString(),     formataData.format(new Date()));
+             //gravacao no banco FireBase
              mDatabase = FirebaseDatabase.getInstance().getReference();
 
              mDatabase.child("Anuncio").child(String.valueOf(new Date())).setValue(inserir);
@@ -178,12 +179,14 @@ public class InserirAnuncioFragment extends Fragment  {
         void onFragmentInteraction(Uri uri);
     }
 
+
+    //Carregar imagem da galeria ou usando a camera
     public void takePhoto() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-        builder.setTitle("Choose Image Source");
-        builder.setItems(new CharSequence[]{"Gallery", "Camera"}, new DialogInterface.OnClickListener() {
+        builder.setTitle("Inclua uma imagem...");
+        builder.setItems(new CharSequence[]{"Escolher existente", "Tirar foto"}, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {

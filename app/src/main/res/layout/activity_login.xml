@@ -10,10 +10,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.weslleyq.bomdebico.LoginActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30sp"
+        android:gravity="center"
+        android:text="Autenticação"
+        android:textSize="24sp" />
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btnSignIn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
     <!--
     <ProgressBar

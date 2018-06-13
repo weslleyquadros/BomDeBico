@@ -78,7 +78,7 @@ public class AnuncioFragment extends Fragment {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-
+                        //vai salvar a data de cadastro , para diferenciar cada cadaastro
                         for(DataSnapshot objSnapShot: dataSnapshot.getChildren()){
                             ItemAnuncios anuncio = objSnapShot.getValue(ItemAnuncios.class);
                             //ListaAnuncios(anuncio);
@@ -109,7 +109,7 @@ public class AnuncioFragment extends Fragment {
 
     private void ListaAnuncios(ItemAnuncios Anuncio) {
         lista.add(new ItemAnuncios(Anuncio.getTitulo(),Anuncio.getDescricao(),Anuncio.getTelefone(), Anuncio.getDatacadastro()));
-        lista.add(new ItemAnuncios("Formatação","Formatação é comigo mesmo, sou Daniel Ferreira","999-99999","hoje"));
+        //lista.add(new ItemAnuncios("Formatação","Formatação é comigo mesmo, sou Daniel Ferreira","999-99999","hoje"));
        /* lista.add(new ItemAnuncios("Moveis Planejados","Sou Matheus José,contato (63) 98415-6688, Facebook: https://www.facebook.com/oficinacriar/",4,R.drawable.oficinacriar));
         lista.add(new ItemAnuncios("Pintura em geral","Faço pitura em geral, favor entrar em contato . (63) 98214-1937 (Claudio).",2,R.drawable.pintura)); */
     }
