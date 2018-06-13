@@ -6,7 +6,8 @@ import android.widget.TextView;
 
 public class DetalheActivity extends AppCompatActivity {
 
-    public TextView campoTexto;
+    public TextView campoTexto, detalheDescricao, detalheFone;
+
     @Override
 
 
@@ -17,10 +18,16 @@ public class DetalheActivity extends AppCompatActivity {
 
 
         campoTexto = (TextView)findViewById(R.id.CampoTexto);
+        detalheDescricao = (TextView) findViewById(R.id.detalheDescricao);
+        detalheFone = (TextView) findViewById(R.id.detalheFone);
 
         String Titulo = this.getIntent().getStringExtra("Titulo");
+        String Descricao = this.getIntent().getStringExtra("Descricao");
+        String Telefone = this.getIntent().getStringExtra("Telefone");
         //String Detalhes = this.getIntent().getStringExtra("Nome");
         //String Data = this.getIntent().getStringExtra("Nome");
         campoTexto.setText(Titulo);
+        detalheDescricao.setText(Descricao);
+        detalheFone.setText(Telefone);
     }
 }

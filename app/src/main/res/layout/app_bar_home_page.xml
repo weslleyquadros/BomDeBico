@@ -9,7 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#5c196b"
+        android:background="#379392"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="#ffda8e"
-        app:srcCompat="@android:drawable/ic_dialog_dialer" />
+        app:backgroundTint="#EE7785"
+        app:srcCompat="@drawable/outline_library_add_white_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -48,6 +48,8 @@ public class AdapterAnuncio extends RecyclerView.Adapter<AdapterAnuncio.ItemView
                 String posicao = Integer.toString(position);
                 Log.d("posicao", posicao);
                 intent.putExtra("Titulo", lista.get(position).getTitulo());
+                intent.putExtra("Descricao", lista.get(position).getTelefone());
+                intent.putExtra("Telefone", lista.get(position).getDescricao());
 
 
 

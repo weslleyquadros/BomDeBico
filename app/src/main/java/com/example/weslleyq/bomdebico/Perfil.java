@@ -1,6 +1,7 @@
 package com.example.weslleyq.bomdebico;
 
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -56,6 +57,7 @@ public class Perfil extends AppCompatActivity implements GoogleApiClient.OnConne
     }
     private void inicializaFirebase() {
    mFirebaseAuth = FirebaseAuth.getInstance();
+
    mAuthStateListener = new FirebaseAuth.AuthStateListener() {
        @Override
        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -75,7 +77,8 @@ public class Perfil extends AppCompatActivity implements GoogleApiClient.OnConne
 
     private void exibirDados(FirebaseUser mFirebaseUser) {
         textEMail.setText(mFirebaseUser.getEmail());
-        textID.setText(mFirebaseUser.getUid());
+        //textID.setText(mFirebaseUser.getUid());
+        textID.setText(mFirebaseUser.getDisplayName());
 
         Glide.with(Perfil.this).load(mFirebaseUser.getPhotoUrl()).into(ivFoto);
 
@@ -90,7 +93,9 @@ public class Perfil extends AppCompatActivity implements GoogleApiClient.OnConne
             public void onClick(View view) {
                signOut();
                 Conexao.logOut();
-                finish();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.conteudo, new AnuncioFragment());
+                transaction.commit();
             }
         });
     }
@@ -102,7 +107,7 @@ public class Perfil extends AppCompatActivity implements GoogleApiClient.OnConne
             @Override
             public void onResult(@NonNull Status status) {
                 alert("Conta desconectada");
-                finish();
+
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.example.weslleyq.bomdebico;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,7 +23,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.example.weslleyq.bomdebico.R;
 
+import static android.app.PendingIntent.getActivity;
 public class HomePage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         AnuncioFragment.OnFragmentInteractionListener, InserirAnuncioFragment.OnFragmentInteractionListener,
@@ -47,10 +50,13 @@ public class HomePage extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Abrirá a inserção", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.conteudo, new InserirAnuncioFragment());
+                transaction.commit();
+
             }
         });
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -68,11 +74,11 @@ public class HomePage extends AppCompatActivity
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-      //  getMenuInflater().inflate(R.menu.menu_search, menu);
+        //  getMenuInflater().inflate(R.menu.menu_search, menu);
         getMenuInflater().inflate(R.menu.home_page, menu);
 
-      //  MenuItem searchItem = menu.findItem(R.id.search);
-       // SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        //  MenuItem searchItem = menu.findItem(R.id.search);
+        // SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         //searchView.setOnQueryTextListener(this);
 
         return true;
@@ -119,6 +125,8 @@ public class HomePage extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+
             return true;
         }
 
@@ -144,10 +152,10 @@ public class HomePage extends AppCompatActivity
             fragmentSelecionado=true;
 
         } else if (id == R.id.nav_perfil) {
-        fragment = new PerfilFragment();
-            fragmentSelecionado=true;
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(intent);
+       //fragment = new PerfilFragment();
+          // fragmentSelecionado=true;
+           Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+           startActivity(intent);
 
         }
         else if (id == R.id.nav_inserir) {

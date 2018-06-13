@@ -1,19 +1,28 @@
 package com.example.weslleyq.bomdebico;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -21,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -47,7 +57,9 @@ public class InserirAnuncioFragment extends Fragment  {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    Uri imageUri;
+    ImageView campoFoto;
+    private String caminhoFoto;
     private GoogleApiClient mGoogleApiClient;
     private DatabaseReference mDatabase;
 
@@ -96,6 +108,15 @@ public class InserirAnuncioFragment extends Fragment  {
         CampoTitulo = (EditText) viewFragment.findViewById(R.id.CampoTitulo);
         CampoDescricao = (EditText) viewFragment.findViewById(R.id.CampoDescricao);
         Campofone = (EditText) viewFragment.findViewById(R.id.Campofone);
+        campoFoto = (ImageView)viewFragment.findViewById(R.id.imgDoAnuncio);
+
+
+        campoFoto.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View v) {
+                                             takePhoto();
+                                         }
+        });
 
         //callConnection();
 
@@ -116,6 +137,8 @@ public class InserirAnuncioFragment extends Fragment  {
              mDatabase.child("Anuncio").child(String.valueOf(new Date())).setValue(inserir);
 
              Toast.makeText(getContext(), " Cadastrado com Sucesso", Toast.LENGTH_SHORT).show();
+
+
          }
         });
         return viewFragment;
@@ -150,68 +173,103 @@ public class InserirAnuncioFragment extends Fragment  {
         mListener = null;
     }
 
-  //  @Override
-    /*
-    public void onLocationChanged(Location location) {
-        Location local = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        */
-
-       /* txtLatitude = (TextView) getActivity().findViewById(R.id.textLatitude);
-        txtLongitude = (TextView) getActivity().findViewById(R.id.textLongitude);
-        txtCidade = (TextView) getActivity().findViewById(R.id.textCidade);
-        txtEstado = (TextView) getActivity().findViewById(R.id.textEstado);
-        txtPais = (TextView) getActivity().findViewById(R.id.textPais); */
-
-  /*
-        if (local != null){
-            Log.i("LOG", "latitude: " + local.getLatitude());
-            Log.i("LOG", "longitude: "+ local.getLongitude());
-            //txtLatitude.setText("Latitude: "+ local.getLatitude());
-            //txtLongitude.setText("Longitude: "+ local.getLongitude());
-
-            try {
-                endereco = buscarEnderecoGPS(local.getLatitude(), local.getLongitude());
-
-                txtCidade.setText("Cidade: "+ endereco.getLocality());
-                txtEstado.setText("Estado: "+endereco.getAdminArea());
-                txtPais.setText("País: "+endereco.getCountryName());
-
-            }catch (IOException e){
-                Log.i("GPS", e.getMessage());
-            }
-
-        }
-
-    }
-
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String s) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {
-
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    public void takePhoto() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        builder.setTitle("Choose Image Source");
+        builder.setItems(new CharSequence[]{"Gallery", "Camera"}, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+
+                        Intent intent = new Intent(
+                                Intent.ACTION_GET_CONTENT);
+                        intent.setType("image/*");
+
+                        Intent chooser = Intent.createChooser(intent, "Choose a Picture");
+                        startActivityForResult(chooser, 0);
+
+                        break;
+
+                    case 1:
+
+                        Intent intentTirarFoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        caminhoFoto = getContext().getExternalFilesDir(null) + "/" + System.currentTimeMillis() + ".jpg";
+                        File foto = new File(caminhoFoto);
+                        imageUri = FileProvider.getUriForFile(getContext(), BuildConfig.APPLICATION_ID + ".provider", foto);
+                        intentTirarFoto.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                        startActivityForResult(intentTirarFoto,1);
+
+                        break;
+
+                }
+            }
+
+        });
+
+        builder.show();
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+
+            switch (requestCode) {
+                case 0:
+
+
+                    Uri selectedImageUri = data.getData();
+
+                    try {
+                        Uri selectedImage = selectedImageUri;
+                        //getContentResolver().notifyChange(selectedImage, null);
+                        ContentResolver cr = getActivity().getContentResolver();
+
+                        Bitmap bitmap;
+                        bitmap = MediaStore.Images.Media
+                                .getBitmap(cr, selectedImage);
+                        campoFoto.setImageBitmap(bitmap);
+
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Failed to load", Toast.LENGTH_SHORT)
+                                .show();
+                        Log.e("Camera", e.toString());
+                    }
+
+
+                    break;
+
+                case 1:
+                    super.onActivityResult(requestCode, resultCode, data);
+                    if (resultCode == Activity.RESULT_OK) {
+                        Uri selectedImage = imageUri;
+                        getActivity().getContentResolver().notifyChange(selectedImage, null);
+                        ContentResolver cr = getActivity().getContentResolver();
+                        Bitmap bitmap;
+                        try {
+                            bitmap = MediaStore.Images.Media
+                                    .getBitmap(cr, selectedImage);
+
+                            campoFoto.setImageBitmap(bitmap);
+                            Toast.makeText(getActivity(), selectedImage.toString(),
+                                    Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            Toast.makeText(getActivity(), "Failed to load", Toast.LENGTH_SHORT)
+                                    .show();
+                            Log.e("Camera", e.toString());
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+
 }

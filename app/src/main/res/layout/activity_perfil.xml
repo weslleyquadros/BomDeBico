@@ -12,9 +12,10 @@
         android:id="@+id/ivFoto"
         android:layout_width="162dp"
         android:layout_height="120dp"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center"
         android:layout_marginTop="48dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
+
 
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_launcher_round"
@@ -22,24 +23,30 @@
         tools:layout_editor_absoluteX="111dp" />
 
     <TextView
-        android:id="@+id/textEmail"
+        android:id="@+id/textID"
         android:layout_width="258dp"
         android:layout_height="45dp"
-        android:layout_marginTop="58dp"
-        android:text="Email"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:text="ID"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/textEmail"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="71dp" />
 
     <TextView
-        android:id="@+id/textID"
+        android:id="@+id/textEmail"
         android:layout_width="258dp"
         android:layout_height="45dp"
-        android:layout_marginTop="16dp"
-        android:text="ID"
+        android:layout_gravity="center"
+        android:layout_marginTop="58dp"
+        android:gravity=""
+        android:text="Email"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        app:layout_constraintTop_toBottomOf="@+id/textEmail"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="71dp" />
 
@@ -49,8 +56,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="55dp"
-        android:background="@android:color/holo_red_dark"
-        android:text="Logout"
+        android:background="@drawable/botaoarredondado"
+        android:text="SignOut"
+        android:layout_gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/textID"
         tools:layout_editor_absoluteX="148dp"
         tools:ignore="MissingConstraints" />
